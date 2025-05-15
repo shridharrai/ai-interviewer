@@ -24,7 +24,7 @@
 
   --font-mona-sans: "Mona Sans", sans-serif;
 
-  --bg-pattern: url("/pattern.png");
+  /* --bg-pattern: url("/pattern.png"); */
 }
 
 :root {
@@ -100,7 +100,7 @@
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* --radius-xl: calc(var(--radius) + 4px); */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -139,7 +139,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply  text-foreground;
   }
   p {
     @apply text-light-100;
@@ -262,15 +262,15 @@
   }
 
   .root-layout {
-    @apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
+    @apply flex mx-auto  flex-col gap-12 max-sm:px-4 max-sm:my-8;
   }
 
   .card-cta {
-    @apply flex flex-row blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
+    @apply flex flex-row blue-gradient-dark px-16 py-6 items-center justify-between max-sm:px-4;
   }
 
   .interviews-section {
-    @apply flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;
+    @apply flex flex-wrap p-6 gap-4 max-lg:flex-col w-full items-stretch;
   }
 
   .interview-text {
@@ -295,7 +295,7 @@
 }
 
 @utility dark-gradient {
-  @apply bg-gradient-to-b from-[#1A1C20] to-[#08090D];
+  @apply bg-gradient-to-b from-[#230739] to-[#230739];
 }
 
 @utility border-gradient {
@@ -303,11 +303,11 @@
 }
 
 @utility pattern {
-  @apply bg-[url('/pattern.png')] bg-top bg-no-repeat;
+  @apply  bg-top bg-no-repeat;
 }
 
 @utility blue-gradient-dark {
-  @apply bg-gradient-to-b from-[#171532] to-[#08090D];
+  @apply bg-gradient-to-b from-[#e8e7fa] to-[#65009e];
 }
 
 @utility blue-gradient {
