@@ -3,7 +3,7 @@ import { db } from "@/firebase/admin";
 
 // api/create-interview/
 export async function POST(request: Request) {
-  const { role, type, level, techstack, questions, userid, jobid } =
+  const { role, type, level, techstack, questions, userid, jobid, name } =
     await request.json();
 
   try {
@@ -15,7 +15,8 @@ export async function POST(request: Request) {
       questions,
       userId: userid,
       jobId: jobid,
-      finalized: true,
+      finalized: false,
+      candidate: name,
       coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),
     };

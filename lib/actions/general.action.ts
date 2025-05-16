@@ -28,7 +28,7 @@ export async function getLatestInterviews(
   const interviews = await db
     .collection("interviews")
     .orderBy("createdAt", "desc")
-    .where("finalized", "==", true)
+    // .where("finalized", "==", true)
     // .where("userId", "!=", userId)
     .limit(limit)
     .get();
@@ -46,15 +46,13 @@ export async function getInterviewById(id: string): Promise<Interview | null> {
 }
 
 export async function createFeedback(params: CreateFeedbackParams) {
-  const { interviewId, userId, transcript } = params;
+  const { interviewId, userId, transcript, userName } = params;
 
   try {
-    const formattedTranscript = transcript
-      .map(
-        (sentence: { role: string; content: string }) =>
-          `- ${sentence.role}: ${sentence.content}\n`
-      )
-      .join("");
+    const formattedTranscript = transcript.map(
+      (sentence: { role: string; content: string }) =>
+        `- ${sentence.role}: ${sentence.content}\n`
+    );
 
     console.log("Formatted Transcript", formattedTranscript);
 
@@ -74,7 +72,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       prompt: `
         You are an AI interviewer analyzing a interview of a candidate. Your task is to evaluate the candidate based on structured categories. Be thorough and detailed in your analysis. Don't be lenient with the candidate. If there are mistakes or areas for improvement, point them out.
         Transcript:
-        ${formattedTranscript}
+        ${formattedTranscript.join("")}
 
         Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided:
         - **Communication Skills**: Clarity, articulation, structured responses.
@@ -89,11 +87,14 @@ export async function createFeedback(params: CreateFeedbackParams) {
     const feedback = {
       interviewId,
       userId,
+      candidate: userName,
       totalScore,
       categoryScores,
       strengths,
       areasForImprovement,
       finalAssessment,
+      transcript: formattedTranscript,
+      videoUrl: "",
     };
 
     const newFeedback = await db.collection("feedback").add(feedback);
@@ -122,4 +123,24 @@ export async function getFeedbackByInterviewId(
   const feedbackDoc = feedback.docs[0];
 
   return { id: feedbackDoc.id, ...feedbackDoc.data() } as Feedback;
+}
+
+export async function finalizeInterview(interviewId: string): Promise<boolean> {
+  try {
+    const interviewRef = db.collection("interviews").doc(interviewId);
+
+    // Check if the document exists
+    const interviewSnap = await interviewRef.get();
+    if (!interviewSnap.exists) {
+      console.warn(`Interview with ID ${interviewId} does not exist.`);
+      return false;
+    }
+
+    // Update the 'finalized' field
+    await interviewRef.update({ finalized: true });
+    return true;
+  } catch (error) {
+    console.error("Error finalizing interview:", error);
+    return false;
+  }
 }

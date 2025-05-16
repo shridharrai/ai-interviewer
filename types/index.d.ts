@@ -29,6 +29,7 @@ interface Interview {
 interface CreateFeedbackParams {
   interviewId: string;
   userId: string;
+  userName: string;
   transcript: { role: string; content: string }[];
   feedbackId?: string;
 }

@@ -6,7 +6,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
-import { createFeedback } from "@/lib/actions/general.action";
+import {
+  createFeedback,
+  finalizeInterview,
+} from "@/lib/actions/general.action";
 import Webcam from "react-webcam";
 
 enum CallStatus {
@@ -118,10 +121,21 @@ const Agent = ({
       interviewId: interviewId!,
       userId: userId!,
       transcript: messages,
+      userName: userName,
     });
 
     if (success && id) {
-      router.push(`/interview/${interviewId}/feedback`);
+      console.log("Feedback saved successfully", id);
+
+      // Call finalizeInterview after feedback is saved
+      const finalized = await finalizeInterview(interviewId!);
+
+      if (finalized) {
+        console.log("Interview finalized successfully.");
+      } else {
+        console.warn("Failed to finalize the interview.");
+      }
+      //   router.push(`/interview/${interviewId}/feedback`);
     } else {
       console.log("Error saving feedback");
       router.push("/");
