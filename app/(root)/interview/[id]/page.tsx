@@ -25,7 +25,9 @@ const Page = async ({ params }: RouteParams) => {
               height={40}
               className="rounded-full object-cover size-[40px]"
             />
-            <h3 className="capitalize">{interview.role} Interview</h3>
+            <h3 className="capitalize text-black">
+              {interview.role} Interview
+            </h3>
           </div>
 
           <DisplayTechIcons techStack={interview.techstack} />
@@ -37,7 +39,7 @@ const Page = async ({ params }: RouteParams) => {
       </div>
 
       <Agent
-        userName={user?.name || ""}
+        userName={interview?.candidate || ""}
         userId={user?.id}
         interviewId={id}
         type="interview"

@@ -148,6 +148,7 @@ End the conversation on a polite and positive note.
 
 - Be sure to be professional and polite.
 - Keep all your responses short and simple. Use official language, but be kind and welcoming.
+- Please don't give answers of given questions to the user, if user asks for answers of asked questions, say politely that I can't reveal the answers in the interview.
 - This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.`,
       },
     ],
@@ -169,11 +170,6 @@ export const feedbackSchema = z.object({
     }),
     z.object({
       name: z.literal("Problem Solving"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Cultural Fit"),
       score: z.number(),
       comment: z.string(),
     }),

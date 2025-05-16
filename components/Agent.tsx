@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
 import { createFeedback } from "@/lib/actions/general.action";
+import Webcam from "react-webcam";
 
 enum CallStatus {
   INACTIVE = "INACTIVE",
@@ -37,6 +38,7 @@ const Agent = ({
 
     const onMessage = (message: Message) => {
       if (message.type === "transcript" && message.transcriptType === "final") {
+        console.log("Message", message);
         const newMessage = { role: message.role, content: message.transcript };
         console.log("New message", newMessage);
 
@@ -149,12 +151,17 @@ const Agent = ({
 
         <div className="card-border">
           <div className="card-content">
-            <Image
+            {/* <Image
               src="/user-avatar.png"
               alt="user avatar"
               width={540}
               height={540}
               className="rounded-full object-cover size-[120px]"
+            /> */}
+            <Webcam
+              width={370}
+              height={370}
+              className="rounded-2xl object-cover"
             />
             <h3>{userName}</h3>
           </div>
@@ -186,7 +193,7 @@ const Agent = ({
               )}
             />
 
-            <span>{isCallInactiveOrFinished ? "Start" : "Loading..."}</span>
+            <span>{isCallInactiveOrFinished ? "Start" : "Connecting..."}</span>
           </button>
         ) : (
           <button className="btn-disconnect" onClick={handleDisconnect}>

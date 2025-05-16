@@ -60,8 +60,8 @@ const Page = async () => {
         </div>
       </section> */}
 
-      <section className="flex flex-col px-6  gap-6 mt-8">
-        <h2 className="text-black "> Your Interviews</h2>
+      <section className="flex flex-col px-6 gap-6 mt-8">
+        <h2 className="text-black">Your Interviews</h2>
 
         <div className="interviews-section">
           {hasUpcomingInterviews ? (
